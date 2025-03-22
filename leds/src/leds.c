@@ -69,7 +69,7 @@ uint16_t LedToMask(uint8_t led) {
 
 void LedsInit(uint16_t * port) {
     port_address = port;
-    *port_address = ALL_LEDS_OFF;
+    LedsTurnOffAll();
 }
 
 void LedsTurnOnSingle(uint8_t led) {
@@ -78,6 +78,14 @@ void LedsTurnOnSingle(uint8_t led) {
 
 void LedsTurnOffSingle(uint8_t led) {
     *port_address &= ~LedToMask(led);
+}
+
+void LedsTurnOffAll() {
+    *port_address = ALL_LEDS_OFF;
+}
+
+bool LedsIsTurnedOn(uint8_t led) {
+    return (*port_address & LedToMask(led)) != 0;
 }
 
 /* === End of documentation ==================================================================== */

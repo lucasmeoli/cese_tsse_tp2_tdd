@@ -62,6 +62,7 @@ void setUp(void) {
     LedsInit(&virtual_leds);
 }
 
+/** @test With initialization, all LEDs are off. */ 
 void test_all_leds_start_off(void) {
     uint16_t leds_virtualss = 0xFFFF;
 
@@ -69,17 +70,20 @@ void test_all_leds_start_off(void) {
     TEST_ASSERT_EQUAL_HEX16(0x0000, virtual_leds);
 }
 
+/** @test Turn on an individual LED. */
 void test_turn_on_single_led(void) {
     LedsTurnOnSingle(4);
     TEST_ASSERT_EQUAL_HEX16(0x0008, virtual_leds);
 }
 
+/** @test Turn off an individual LED. */
 void test_turn_off_single_led(void) {
     LedsTurnOnSingle(4);
     LedsTurnOffSingle(4);
     TEST_ASSERT_EQUAL_HEX16(0x0000, virtual_leds);
 }
 
+/** @test Turn on and turn off multiple LEDs. */
 void test_turn_on_and_off_multiple_leds(void) {
     LedsTurnOnSingle(4);
     LedsTurnOnSingle(6);
@@ -90,6 +94,29 @@ void test_turn_on_and_off_multiple_leds(void) {
     TEST_ASSERT_EQUAL_HEX16(0x0020, virtual_leds);
 }
 
+/** @test Turn off all LEDs at once. */
+void test_turn_off_all_leds(void) {
+    for (int i = 0; i < 16; i++) {
+        LedsTurnOnSingle(i);
+    }
+    LedsTurnOffAll();
 
+    TEST_ASSERT_EQUAL_HEX16(0x0000, virtual_leds);
+}
+
+/** @test Check the status of a LED that is on. */
+void test_check_status_led_is_on(void) {
+    LedsTurnOnSingle(4);
+
+    TEST_ASSERT_TRUE(LedsIsTurnedOn(4));
+}
+
+/** @test Check the status of a LED that is off. */
+void test_check_status_led_is_off(void) {
+    LedsTurnOnSingle(4);
+    LedsTurnOffSingle(4);
+
+    TEST_ASSERT_FALSE(LedsIsTurnedOn(4));
+}
 
 /* === End of documentation ==================================================================== */

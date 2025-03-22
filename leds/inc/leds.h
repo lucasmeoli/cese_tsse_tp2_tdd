@@ -29,6 +29,7 @@ SPDX-License-Identifier: MIT
 /* === Headers files inclusions ================================================================ */
 
 #include <stdint.h>
+#include <stdbool.h>
 
 /* === C++ Header ============================================================================== */
 
@@ -67,6 +68,20 @@ void LedsTurnOnSingle(uint8_t led);
  * @param led The LED number to be turned off
  */
 void LedsTurnOffSingle(uint8_t led);
+
+/**
+ * @brief Function to turn off ALL LEDs
+ */
+void LedsTurnOffAll();
+
+/**
+ * @brief Function to check if a LED is on
+ * 
+ * @param led The LED number to check (must be within valid range)
+ * 
+ * @return bool True if the LED is on
+ */
+bool LedsIsTurnedOn(uint8_t led);
 
 
 /* === End of documentation ==================================================================== */

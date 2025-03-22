@@ -19,6 +19,9 @@ extern void test_all_leds_start_off(void);
 extern void test_turn_on_single_led(void);
 extern void test_turn_off_single_led(void);
 extern void test_turn_on_and_off_multiple_leds(void);
+extern void test_turn_off_all_leds(void);
+extern void test_check_status_led_is_on(void);
+extern void test_check_status_led_is_off(void);
 
 
 /*=======Mock Management=====*/
@@ -101,16 +104,25 @@ static void run_test(UnityTestFunction func, const char* name, UNITY_LINE_TYPE l
       UNITY_PRINT_EOL();
       UnityPrint("  test_turn_on_and_off_multiple_leds");
       UNITY_PRINT_EOL();
+      UnityPrint("  test_turn_off_all_leds");
+      UNITY_PRINT_EOL();
+      UnityPrint("  test_check_status_led_is_on");
+      UNITY_PRINT_EOL();
+      UnityPrint("  test_check_status_led_is_off");
+      UNITY_PRINT_EOL();
       return 0;
     }
     return parse_status;
   }
 #endif
   UnityBegin("test_leds.c");
-  run_test(test_all_leds_start_off, "test_all_leds_start_off", 65);
-  run_test(test_turn_on_single_led, "test_turn_on_single_led", 72);
-  run_test(test_turn_off_single_led, "test_turn_off_single_led", 78);
-  run_test(test_turn_on_and_off_multiple_leds, "test_turn_on_and_off_multiple_leds", 84);
+  run_test(test_all_leds_start_off, "test_all_leds_start_off", 66);
+  run_test(test_turn_on_single_led, "test_turn_on_single_led", 74);
+  run_test(test_turn_off_single_led, "test_turn_off_single_led", 80);
+  run_test(test_turn_on_and_off_multiple_leds, "test_turn_on_and_off_multiple_leds", 87);
+  run_test(test_turn_off_all_leds, "test_turn_off_all_leds", 98);
+  run_test(test_check_status_led_is_on, "test_check_status_led_is_on", 108);
+  run_test(test_check_status_led_is_off, "test_check_status_led_is_off", 115);
 
   return UNITY_END();
 }

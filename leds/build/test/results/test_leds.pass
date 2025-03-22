@@ -5,27 +5,39 @@
   :basename: test_leds.c
 :successes:
 - :test: test_all_leds_start_off
-  :line: 65
+  :line: 66
   :message: ''
   :unity_test_time: 0
 - :test: test_turn_on_single_led
-  :line: 72
+  :line: 74
   :message: ''
   :unity_test_time: 0
 - :test: test_turn_off_single_led
-  :line: 78
+  :line: 80
   :message: ''
   :unity_test_time: 0
 - :test: test_turn_on_and_off_multiple_leds
-  :line: 84
+  :line: 87
+  :message: ''
+  :unity_test_time: 0
+- :test: test_turn_off_all_leds
+  :line: 98
+  :message: ''
+  :unity_test_time: 0
+- :test: test_check_status_led_is_on
+  :line: 108
+  :message: ''
+  :unity_test_time: 0
+- :test: test_check_status_led_is_off
+  :line: 115
   :message: ''
   :unity_test_time: 0
 :failures: []
 :ignores: []
 :counts:
-  :total: 4
-  :passed: 4
+  :total: 7
+  :passed: 7
   :failed: 0
   :ignored: 0
 :stdout: []
-:time: 0.0036673760005214717
+:time: 0.004462863998924149
