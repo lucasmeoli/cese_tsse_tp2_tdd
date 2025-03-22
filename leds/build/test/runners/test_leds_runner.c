@@ -6,6 +6,7 @@
 #ifndef UNITY_EXCLUDE_FLOAT
 #define UNITY_EXCLUDE_FLOAT
 #endif /* UNITY_EXCLUDE_FLOAT */
+#include "leds.h"
 
 int GlobalExpectCount;
 int GlobalVerifyOrder;
@@ -15,6 +16,9 @@ char* GlobalOrderError;
 extern void setUp(void);
 extern void tearDown(void);
 extern void test_all_leds_start_off(void);
+extern void test_turn_on_single_led(void);
+extern void test_turn_off_single_led(void);
+extern void test_turn_on_and_off_multiple_leds(void);
 
 
 /*=======Mock Management=====*/
@@ -30,9 +34,6 @@ static void CMock_Verify(void)
 static void CMock_Destroy(void)
 {
 }
-
-/*=======Setup (stub)=====*/
-void setUp(void) {}
 
 /*=======Teardown (stub)=====*/
 void tearDown(void) {}
@@ -94,13 +95,22 @@ static void run_test(UnityTestFunction func, const char* name, UNITY_LINE_TYPE l
       UNITY_PRINT_EOL();
       UnityPrint("  test_all_leds_start_off");
       UNITY_PRINT_EOL();
+      UnityPrint("  test_turn_on_single_led");
+      UNITY_PRINT_EOL();
+      UnityPrint("  test_turn_off_single_led");
+      UNITY_PRINT_EOL();
+      UnityPrint("  test_turn_on_and_off_multiple_leds");
+      UNITY_PRINT_EOL();
       return 0;
     }
     return parse_status;
   }
 #endif
   UnityBegin("test_leds.c");
-  run_test(test_all_leds_start_off, "test_all_leds_start_off", 60);
+  run_test(test_all_leds_start_off, "test_all_leds_start_off", 65);
+  run_test(test_turn_on_single_led, "test_turn_on_single_led", 72);
+  run_test(test_turn_off_single_led, "test_turn_off_single_led", 78);
+  run_test(test_turn_on_and_off_multiple_leds, "test_turn_on_and_off_multiple_leds", 84);
 
   return UNITY_END();
 }

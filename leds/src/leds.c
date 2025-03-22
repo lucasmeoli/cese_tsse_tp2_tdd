@@ -19,37 +19,41 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 SPDX-License-Identifier: MIT
 *************************************************************************************************/
 
-/** @file test_leds.c
- ** @brief Unit tests for the LED control library
+/** @file leds.c
+ ** @brief Definitions of functions for the LED control library
  **/
-
- /**
- * @test Con la inicialización todos los LEDs quedan apagados.
- * @test Prender un LED individual.
- * @test Apagar un LED individual.
- * @test Prender y apagar múltiples LED’s.
- * @test Prender todos los LEDs de una vez.
- * @test Apagar todos los LEDs de una vez.
- * @test Consultar el estado de un LED que está encendido
- * @test Consultar el estado de un LED que est apagado
- * @test Revisar limites de los parametros.
- * @test Revisar parámetros fuera de los limites.
- */
 
 /* === Headers files inclusions =============================================================== */
 
-#include "unity.h"
 #include "leds.h"
 
 /* === Macros definitions ====================================================================== */
+
+/** @brief Mask to turn off all LEDs */
+#define ALL_LEDS_OFF 0x0000
+
+/** @brief Difference between the LED number and the bit number */
+#define LEDS_TO_BIT_OFFSET 1
+
+/** @brief Constant with the first bit set to one to generate a mask */
+#define FIRST_BIT 1
 
 /* === Private data type declarations ========================================================== */
 
 /* === Private variable declarations =========================================================== */
 
-static uint16_t virtual_leds = 0xFFFF; 
+/** @brief Private variable to store the output port address */
+static uint16_t * port_address;
 
 /* === Private function declarations =========================================================== */
+
+/**
+ * @brief Private function to convert an LED number into a bitmask.
+ * 
+ * @param led LED number for which the mask should be generated
+ * @return uint16_t Bitmask with 1 in the position corresponding to the LED
+ */
+static uint16_t LedToMask(uint8_t led);
 
 /* === Public variable definitions ============================================================= */
 
@@ -57,39 +61,23 @@ static uint16_t virtual_leds = 0xFFFF;
 
 /* === Private function implementation ========================================================= */
 
+uint16_t LedToMask(uint8_t led) {
+    return  (FIRST_BIT << (led - LEDS_TO_BIT_OFFSET));
+}
+
 /* === Public function implementation ========================================================== */
-void setUp(void) {
-    LedsInit(&virtual_leds);
+
+void LedsInit(uint16_t * port) {
+    port_address = port;
+    *port_address = ALL_LEDS_OFF;
 }
 
-void test_all_leds_start_off(void) {
-    uint16_t leds_virtualss = 0xFFFF;
-
-    LedsInit(&virtual_leds);
-    TEST_ASSERT_EQUAL_HEX16(0x0000, virtual_leds);
+void LedsTurnOnSingle(uint8_t led) {
+    *port_address |= LedToMask(led);
 }
 
-void test_turn_on_single_led(void) {
-    LedsTurnOnSingle(4);
-    TEST_ASSERT_EQUAL_HEX16(0x0008, virtual_leds);
+void LedsTurnOffSingle(uint8_t led) {
+    *port_address &= ~LedToMask(led);
 }
-
-void test_turn_off_single_led(void) {
-    LedsTurnOnSingle(4);
-    LedsTurnOffSingle(4);
-    TEST_ASSERT_EQUAL_HEX16(0x0000, virtual_leds);
-}
-
-void test_turn_on_and_off_multiple_leds(void) {
-    LedsTurnOnSingle(4);
-    LedsTurnOnSingle(6);
-
-    LedsTurnOffSingle(4);
-    LedsTurnOffSingle(8);
-
-    TEST_ASSERT_EQUAL_HEX16(0x0020, virtual_leds);
-}
-
-
 
 /* === End of documentation ==================================================================== */
